@@ -2,7 +2,6 @@ package io.github.lvicentesanchez.cluster.api
 
 import akka.actor.ActorRef
 import akka.pattern.ask
-import akka.util.Timeout
 import io.github.lvicentesanchez.cluster.Application
 
 import scala.concurrent.Future
@@ -14,13 +13,13 @@ trait ApplicationAPI {
 }
 
 class ApplicationAPIImpl(applicationRef: ActorRef, timeout: FiniteDuration) extends ApplicationAPI {
-  implicit val t: Timeout = timeout
+  import Application._
 
   override def createApplication(name: String): Future[Unit] =
-    (applicationRef ? Application.Protocol.CreateApplication(name)).mapTo[Unit]
+    ask(applicationRef, Protocol.CreateApplication(name))(timeout).mapTo[Unit]
 
   override def getApplicationEndpoint(name: String): Future[String] =
-    (applicationRef ? Application.Protocol.GetApplicationEndpoint(name)).mapTo[String]
+    ask(applicationRef, Protocol.GetApplicationEndpoint(name))(timeout).mapTo[String]
 }
 
 object ApplicationAPIImpl {

@@ -14,10 +14,10 @@ trait UserAPI {
 }
 
 class UserAPIImpl(userRef: ActorRef, timeout: FiniteDuration) extends UserAPI {
-  implicit val t: Timeout = timeout
+  import User._
 
   override def sendMessage(userID: UserID, content: Content): Future[Unit] =
-    (userRef ? User.Protocol.SendMessage(userID, content)).mapTo[Unit]
+    ask(userRef, Protocol.SendMessage(userID, content))(timeout).mapTo[Unit]
 }
 
 object UserAPIImpl {
