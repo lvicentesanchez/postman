@@ -1,4 +1,4 @@
-package io.github.lvicentesanchez.actors.sharding
+package io.github.lvicentesanchez.cluster.sharding
 
 import akka.actor.{ ActorRef, ActorSystem }
 import akka.cluster.sharding.{ ClusterSharding, ClusterShardingSettings, ShardRegion }
