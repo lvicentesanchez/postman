@@ -3,16 +3,19 @@ import scalariform.formatter.preferences._
 
 // Resolvers
 resolvers ++= Seq(
+  "dnvriend @ bintray" at "http://dl.bintray.com/dnvriend/maven"
 )
 
 // Dependencies
-val testDependencies = Seq (
+val rootDependencies = Seq(
+  "com.typesafe.akka"   %% "akka-cluster"              % Vers.Akka,
+  "com.typesafe.akka"   %% "akka-cluster-tools"        % Vers.Akka,
+  "com.typesafe.akka"   %% "akka-cluster-sharding"     % Vers.Akka,
+  "com.typesafe.akka"   %% "akka-persistence"          % Vers.Akka,
+  "com.github.dnvriend" %% "akka-persistence-inmemory" % "1.1.5"
 )
 
-val rootDependencies = Seq(
-  "com.typesafe.akka" %% "akka-cluster"          % Vers.Akka,
-  "com.typesafe.akka" %% "akka-cluster-tools"    % Vers.Akka,
-  "com.typesafe.akka" %% "akka-cluster-sharding" % Vers.Akka
+val testDependencies = Seq (
 )
 
 val dependencies =
