@@ -1,7 +1,8 @@
 package io.github.lvicentesanchez.cluster.api
 
-import akka.actor.{ Actor, ActorRef }
+import akka.actor.ActorRef
 import akka.pattern.ask
+import akka.util.Timeout
 import io.github.lvicentesanchez.cluster.User
 import io.github.lvicentesanchez.data.{ Content, UserID }
 
@@ -13,9 +14,10 @@ trait UserAPI {
 }
 
 class UserAPIImpl(userRef: ActorRef, timeout: FiniteDuration) extends UserAPI {
+  implicit val t: Timeout = timeout
 
   override def sendMessage(userID: UserID, content: Content): Future[Unit] =
-    userRef.ask(User.Protocol.SendMessage(userID, content))(timeout, Actor.noSender).mapTo[Unit]
+    (userRef ? User.Protocol.SendMessage(userID, content)).mapTo[Unit]
 }
 
 object UserAPIImpl {

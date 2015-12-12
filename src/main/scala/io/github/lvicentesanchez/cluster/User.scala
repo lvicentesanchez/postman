@@ -21,7 +21,6 @@ class User() extends Actor {
       context.parent ! ShardRegion.Passivate(stopMessage = SupervisorStrategy.Stop)
 
     case SupervisorStrategy.Stop =>
-      println(s"Actor ${context.self.path.name} is stopping!")
       context.stop(self)
   }
 }
